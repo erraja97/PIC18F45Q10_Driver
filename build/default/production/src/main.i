@@ -7,7 +7,9 @@
 # 1 "C:\\Program Files\\Microchip\\xc8\\v3.00\\pic\\include/language_support.h" 1 3
 # 2 "<built-in>" 2
 # 1 "src/main.c" 2
-# 10 "src/main.c"
+# 16 "src/main.c"
+# 1 "src/../examples/example_push_button.c" 1
+# 10 "src/../examples/example_push_button.c"
 # 1 "includes/gpio.h" 1
 # 15 "includes/gpio.h"
 # 1 "includes/pic18f45q10_regs.h" 1
@@ -233,7 +235,7 @@ void GPIO_WritePort(unsigned char port, uint8_t value);
 uint8_t GPIO_ReadPort(unsigned char port);
 # 118 "includes/gpio.h"
 uint8_t GPIO_ReadPortDebounced(unsigned char port);
-# 11 "src/main.c" 2
+# 11 "src/../examples/example_push_button.c" 2
 # 1 "includes/config_bits.h" 1
 # 18 "includes/config_bits.h"
 #pragma config FEXTOSC = HS
@@ -260,8 +262,8 @@ uint8_t GPIO_ReadPortDebounced(unsigned char port);
 
 
 #pragma config LVP = OFF
-# 12 "src/main.c" 2
-# 24 "src/main.c"
+# 12 "src/../examples/example_push_button.c" 2
+# 23 "src/../examples/example_push_button.c"
 void delay_ms(unsigned int ms) {
     while (ms--) {
         for (volatile unsigned int j = 0; j < 500; j++) {
@@ -273,18 +275,46 @@ void delay_ms(unsigned int ms) {
 
 
 
-void main(void) {
+void init_push_button(void) {
+    GPIO_SetDirection(1, 0, GPIO_INPUT);
+
+
+    ANSELB = 0x00;
+
+
+    WPUB |= (1 << 0);
+
+
+    OPTION_REGbits.nWPUEN = 0;
+}
+
+
+
+
+void Example_Run(void) {
 
     GPIO_Init();
+    init_push_button();
 
 
     GPIO_SetDirection(0, 0, GPIO_OUTPUT);
 
+
+    GPIO_SetDirection(1, 0, GPIO_INPUT);
+
     while (1) {
 
-        GPIO_Write(0, 0, !GPIO_Read(0, 0));
+        if (GPIO_ReadDebounced(1, 0)) {
+
+            GPIO_Write(0, 0, !GPIO_Read(0, 0));
 
 
-        delay_ms(500);
+            delay_ms(250);
+        }
     }
+}
+# 17 "src/main.c" 2
+# 27 "src/main.c"
+void main(void) {
+    Example_Run();
 }

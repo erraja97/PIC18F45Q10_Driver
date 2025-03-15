@@ -2,48 +2,28 @@
  * @file main.c
  * @author Raja Gupta
  * @Created March 15, 2025
- * @brief Blink LED Test Program for PIC18F45Q10
+ * @brief Static entry point for PIC18F45Q10
  *
- * This program tests the GPIO driver by toggling an LED on RA0.
+ * Loads different example programs from the `examples/` directory.
  */
 
-#include "gpio.h"
-#include "config_bits.h"
+/** Select the active example */
+#define EXAMPLE_MODE  1  // Change this value to switch between examples
 
-// Define the LED pin
-#define LED_PORT GPIO_PORTA
-#define LED_PIN  0
+#if EXAMPLE_MODE == 1
+    #include "../examples/example_blink_led.c"
+#elif EXAMPLE_MODE == 2
+    #include "../examples/example_push_button.c"
+#elif EXAMPLE_MODE == 3
+    #include "../examples/example_gpio_interrupt.c"
+#else
+    #error "Invalid EXAMPLE_MODE selected. Choose 1, 2, or 3."
+#endif
 
-/**
- * @brief Delays execution for a given number of milliseconds.
- *
- * This is a simple blocking delay. For accurate timing, use a timer module instead.
- *
- * @param ms The number of milliseconds to delay.
- */
-void delay_ms(unsigned int ms) {
-    while (ms--) {
-        for (volatile unsigned int j = 0; j < 500; j++) {
-            __asm__ volatile ("nop");  // Do nothing (wastes one cycle)
-        }
-    }
-}
 
 /**
  * @brief Main entry point of the program.
  */
 void main(void) {
-    // Initialize the GPIO system
-    GPIO_Init();
-
-    // Set RA0 as output for LED
-    GPIO_SetDirection(LED_PORT, LED_PIN, GPIO_OUTPUT);
-
-    while (1) {
-        // Toggle LED by reading current state and inverting it
-        GPIO_Write(LED_PORT, LED_PIN, !GPIO_Read(LED_PORT, LED_PIN));
-
-        // Delay for 500ms
-        delay_ms(500);
-    }
+    Example_Run(); // Calls the selected example?s function
 }

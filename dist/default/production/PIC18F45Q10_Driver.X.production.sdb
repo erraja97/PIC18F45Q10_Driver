@@ -3,7 +3,7 @@
 [d edition pro ]
 [d chip 18F45Q10 ]
 [d frameptr 4065 ]
-"40 D:\My_Projects\PIC18F45Q10_Driver\PIC18F45Q10_Driver.X\src/main.c
+"39 D:\My_Projects\PIC18F45Q10_Driver\PIC18F45Q10_Driver.X/examples/example_push_button.c
 [e E87 . `uc
 GPIO_INPUT 1
 GPIO_OUTPUT 0
@@ -37,6 +37,10 @@ GPIO_OUTPUT 0
 [v ___lmul __lmul `(ul  1 e 4 0 ]
 "91 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\Umul64.c
 [v ___omul __omul `(uo  1 e 8 0 ]
+"23 D:\My_Projects\PIC18F45Q10_Driver\PIC18F45Q10_Driver.X/examples/example_push_button.c
+[v _delay_ms delay_ms `(v  1 e 1 0 ]
+"34
+[v _Example_Run Example_Run `(v  1 e 1 0 ]
 "13 D:\My_Projects\PIC18F45Q10_Driver\PIC18F45Q10_Driver.X\src/gpio.c
 [v _GPIO_Init GPIO_Init `(v  1 e 1 0 ]
 "23
@@ -45,33 +49,38 @@ GPIO_OUTPUT 0
 [v _GPIO_Write GPIO_Write `(v  1 e 1 0 ]
 "59
 [v _GPIO_Read GPIO_Read `(uc  1 e 1 0 ]
+"74
+[v _GPIO_ReadDebounced GPIO_ReadDebounced `(uc  1 e 1 0 ]
 "109
 [v _GPIO_ReadPort GPIO_ReadPort `(uc  1 e 1 0 ]
-"24 D:\My_Projects\PIC18F45Q10_Driver\PIC18F45Q10_Driver.X\src/main.c
-[v _delay_ms delay_ms `(v  1 e 1 0 ]
-"35
+"27 D:\My_Projects\PIC18F45Q10_Driver\PIC18F45Q10_Driver.X\src/main.c
 [v _main main `(v  1 e 1 0 ]
 [v _main main `(v  1 e 1 0 ]
 {
-"49
+"29
 } 0
-"24
+"34 D:\My_Projects\PIC18F45Q10_Driver\PIC18F45Q10_Driver.X/examples/example_push_button.c
+[v _Example_Run Example_Run `(v  1 e 1 0 ]
+{
+"54
+} 0
+"23
 [v _delay_ms delay_ms `(v  1 e 1 0 ]
 {
-"26
+"25
 [v delay_ms@j j `VEui  1 a 2 2 ]
-"24
+"23
 [v delay_ms@ms ms `ui  1 p 2 0 ]
-"30
+"29
 } 0
 "39 D:\My_Projects\PIC18F45Q10_Driver\PIC18F45Q10_Driver.X\src/gpio.c
 [v _GPIO_Write GPIO_Write `(v  1 e 1 0 ]
 {
 [v GPIO_Write@port port `uc  1 p 1 wreg ]
 [v GPIO_Write@port port `uc  1 p 1 wreg ]
-[v GPIO_Write@pin pin `uc  1 p 1 10 ]
-[v GPIO_Write@value value `uc  1 p 1 11 ]
-[v GPIO_Write@port port `uc  1 p 1 15 ]
+[v GPIO_Write@pin pin `uc  1 p 1 0 ]
+[v GPIO_Write@value value `uc  1 p 1 1 ]
+[v GPIO_Write@port port `uc  1 p 1 5 ]
 "57
 } 0
 "23
@@ -83,6 +92,24 @@ GPIO_OUTPUT 0
 [v GPIO_SetDirection@direction direction `E87  1 p 1 1 ]
 [v GPIO_SetDirection@port port `uc  1 p 1 5 ]
 "37
+} 0
+"74
+[v _GPIO_ReadDebounced GPIO_ReadDebounced `(uc  1 e 1 0 ]
+{
+[v GPIO_ReadDebounced@port port `uc  1 p 1 wreg ]
+"80
+[v GPIO_ReadDebounced@i i `uc  1 a 1 12 ]
+"75
+[v GPIO_ReadDebounced@stable_value stable_value `uc  1 a 1 15 ]
+[v GPIO_ReadDebounced@temp_value temp_value `uc  1 a 1 14 ]
+"76
+[v GPIO_ReadDebounced@debounce_counter debounce_counter `uc  1 a 1 11 ]
+"74
+[v GPIO_ReadDebounced@port port `uc  1 p 1 wreg ]
+[v GPIO_ReadDebounced@pin pin `uc  1 p 1 10 ]
+"76
+[v GPIO_ReadDebounced@port port `uc  1 p 1 13 ]
+"89
 } 0
 "59
 [v _GPIO_Read GPIO_Read `(uc  1 e 1 0 ]

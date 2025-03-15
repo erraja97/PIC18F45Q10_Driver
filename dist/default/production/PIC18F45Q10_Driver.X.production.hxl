@@ -1,7 +1,7 @@
 ### HEXMate logfile and output summary ###
 
 ### Command-line arguments ###
- C:\Users\erraj\AppData\Local\Temp\xcAs56s.\driver_tmp_3.o
+ C:\Users\erraj\AppData\Local\Temp\xcAs2r4.\driver_tmp_3.o
  -Odist/default/production\PIC18F45Q10_Driver.X.production.hex
  -logfile=dist/default/production\PIC18F45Q10_Driver.X.production.hxl
  -addressing=1
@@ -9,19 +9,19 @@
 
 ### Memory Usage ###
  Input file ranges:
-  0h - 3h		(C:\Users\erraj\AppData\Local\Temp\xcAs56s.\driver_tmp_3.o)
-  900h - E45h		(C:\Users\erraj\AppData\Local\Temp\xcAs56s.\driver_tmp_3.o)
-  7FFCh - 7FFFh		(C:\Users\erraj\AppData\Local\Temp\xcAs56s.\driver_tmp_3.o)
-  300000h - 300007h		(C:\Users\erraj\AppData\Local\Temp\xcAs56s.\driver_tmp_3.o)
+  0h - 3h		(C:\Users\erraj\AppData\Local\Temp\xcAs2r4.\driver_tmp_3.o)
+  900h - EBBh		(C:\Users\erraj\AppData\Local\Temp\xcAs2r4.\driver_tmp_3.o)
+  7FFCh - 7FFFh		(C:\Users\erraj\AppData\Local\Temp\xcAs2r4.\driver_tmp_3.o)
+  300000h - 300007h		(C:\Users\erraj\AppData\Local\Temp\xcAs2r4.\driver_tmp_3.o)
  Unused ranges:
   4h - 8FFh
-  E46h - 7FFBh
+  EBCh - 7FFBh
   8000h - 2FFFFFh
 
 ### Hex Memory Map ###
  Legend:
   -- = Unused memory
-  H1 = Input file             (C:\Users\erraj\AppData\Local\Temp\xcAs56s.\driver_tmp_3.o)
+  H1 = Input file             (C:\Users\erraj\AppData\Local\Temp\xcAs2r4.\driver_tmp_3.o)
 ----------------------------------------------------------
          | 00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
 ----------------------------------------------------------
@@ -111,7 +111,14 @@
 00000E10 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
 00000E20 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
 00000E30 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
-00000E40 | H1 H1 H1 H1 H1 H1 -- -- -- -- -- -- -- -- -- --
+00000E40 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+00000E50 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+00000E60 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+00000E70 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+00000E80 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+00000E90 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+00000EA0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+00000EB0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 -- -- -- --
 ----------------------------------------------------------
 00007FF0 | -- -- -- -- -- -- -- -- -- -- -- -- H1 H1 H1 H1
 ----------------------------------------------------------
