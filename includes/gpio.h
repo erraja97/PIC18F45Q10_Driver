@@ -26,6 +26,12 @@ typedef enum {
     GPIO_OUTPUT = 0 ///< COnfigure pin as output
 } gpio_direction_t;
 
+/** Pin state enumeration */
+typedef enum {
+    GPIO_HIGH = 1, ///< Configure pin as input
+    GPIO_LOW = 0 ///< COnfigure pin as output
+} gpio_state_t;
+
 /** GPIO API Function Prototypes */
 
 /**
@@ -35,56 +41,82 @@ void GPIO_Init(void);
 
 /**
  * @brief Configure a GPIO pin as input or output
+ * @param port          The target port (GPIO_PORTA, GPIO_PORTB, GPIO_PORTC)
+ * @param pin           The target pin (0-7)
+ * @param direction     The direction of pin (GPIO_INPUT, GPIO_OUTPUT)
  */
 void GPIO_SetDirection(unsigned char port, unsigned char pin, gpio_direction_t direction);
 
 /**
  * @brief Writes a value (HIGH/LOW) to a GPIO pin (atomic write).
+ * @param port          The target port (GPIO_PORTA, GPIO_PORTB, GPIO_PORTC)
+ * @param pin           The target pin (0-7)
+ * @param state         The state of pin (GPIO_HIGH, GPIO_LOW)
  */
 void GPIO_Write(unsigned char port, unsigned char pin, unsigned char value);
 
+
 /**
- * @brief Reads the logic state of a GPIO pin.
+ * @brief Reads the current logic state of a GPIO pin.
+ *
+ * If the pin is configured as an input, it reads from PORTx.
+ * If the pin is configured as an output, it reads from LATx.
+ *
+ * @param port          The target port (GPIO_PORTA, GPIO_PORTB, GPIO_PORTC).
+ * @param pin           The pin number (0-7).
+ * @return 1 if HIGH, 0 if LOW.
  */
 unsigned char GPIO_Read(unsigned char port, unsigned char pin);
 
+
+
 /**
  * @brief Reads the logic state of a GPIO pin with debounce.
+ *
+ * If the pin is configured as an input, it reads from PORTx.
+ * If the pin is configured as an output, it reads from LATx.
+ * This function filters out bouncing noise from mechanical switches.
+ *
+ * @param port          The target port (GPIO_PORTA, GPIO_PORTB, GPIO_PORTC).
+ * @param pin           The pin number (0-7).
+ * @return 1 if HIGH, 0 if LOW.
  */
 unsigned char GPIO_ReadDebounced(unsigned char port, unsigned char pin);
 
-/**
- * @brief Macro for setting a pin HIGH(bitwise)
- */
-static inline void GPIO_SetPin(unsigned char port, unsigned char pin){
-    switch(port){
-        case GPIO_PORTA: LATA.value |= (1 << pin); break;
-        case GPIO_PORTB: LATB.value |= (1 << pin); break;
-        case GPIO_PORTC: LATC.value |= (1 << pin); break;
-    }
-}
+
 
 /**
- * @brief Macro for setting a pin LOW(bitwise)
+ * @brief Writes an 8-bit value to an entire GPIO port.
+ *
+ * @param port The target port (GPIO_PORTA, GPIO_PORTB, GPIO_PORTC)
+ * @param value The 8-bit value to write (0x00 - 0xFF)
  */
-static inline void GPIO_ClearPin(unsigned char port, unsigned char pin){
-    switch(port){
-        case GPIO_PORTA: LATA.value &= ~(1 << pin); break;
-        case GPIO_PORTB: LATB.value &= ~(1 << pin); break;
-        case GPIO_PORTC: LATC.value &= ~(1 << pin); break;
-    }
-}
+void GPIO_WritePort(unsigned char port, uint8_t value);
 
-/** 
- * @brief Macro for toggling a pin (bitwise).
+
+/**
+ * @brief Reads the entire 8-bit value from a GPIO port.
+ * 
+ * If the pin is configured as an input, it reads from PORTx.
+ * If the pin is configured as an output, it reads from LATx.
+ *
+ * @param port          The target port (GPIO_PORTA, GPIO_PORTB, GPIO_PORTC).
+ * @return The 8-bit value read from the port.
  */
-static inline void GPIO_TogglePin(unsigned char port, unsigned char pin) {
-    switch (port) {
-        case GPIO_PORTA: LATA.value ^= (1 << pin); break;
-        case GPIO_PORTB: LATB.value ^= (1 << pin); break;
-        case GPIO_PORTC: LATC.value ^= (1 << pin); break;
-    }
-}
+uint8_t GPIO_ReadPort(unsigned char port);
+
+
+/**
+ * @brief Reads the entire 8-bit value from a GPIO port with debounce.
+ *
+ * If the pin is configured as an input, it reads from PORTx.
+ * If the pin is configured as an output, it reads from LATx.
+ *
+ * @param port          The target port (GPIO_PORTA, GPIO_PORTB, GPIO_PORTC).
+ * @return The 8-bit debounced value read from the port.
+ */
+uint8_t GPIO_ReadPortDebounced(unsigned char port);
+
 
 #endif	/* GPIO_H */
 

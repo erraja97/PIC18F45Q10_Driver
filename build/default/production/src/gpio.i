@@ -196,6 +196,12 @@ typedef enum {
 } gpio_direction_t;
 
 
+typedef enum {
+    GPIO_HIGH = 1,
+    GPIO_LOW = 0
+} gpio_state_t;
+
+
 
 
 
@@ -205,59 +211,29 @@ void GPIO_Init(void);
 
 
 
+
+
+
 void GPIO_SetDirection(unsigned char port, unsigned char pin, gpio_direction_t direction);
 
 
 
 
+
+
+
 void GPIO_Write(unsigned char port, unsigned char pin, unsigned char value);
-
-
-
-
+# 69 "includes/gpio.h"
 unsigned char GPIO_Read(unsigned char port, unsigned char pin);
-
-
-
-
+# 84 "includes/gpio.h"
 unsigned char GPIO_ReadDebounced(unsigned char port, unsigned char pin);
-
-
-
-
-static __attribute__((inline)) void GPIO_SetPin(unsigned char port, unsigned char pin){
-    switch(port){
-        case 0: (*(volatile PORTA_t*) 0xF82).value |= (1 << pin); break;
-        case 1: (*(volatile PORTA_t*) 0xF83).value |= (1 << pin); break;
-        case 2: (*(volatile PORTA_t*) 0xF84).value |= (1 << pin); break;
-    }
-}
-
-
-
-
-static __attribute__((inline)) void GPIO_ClearPin(unsigned char port, unsigned char pin){
-    switch(port){
-        case 0: (*(volatile PORTA_t*) 0xF82).value &= ~(1 << pin); break;
-        case 1: (*(volatile PORTA_t*) 0xF83).value &= ~(1 << pin); break;
-        case 2: (*(volatile PORTA_t*) 0xF84).value &= ~(1 << pin); break;
-    }
-}
-
-
-
-
-static __attribute__((inline)) void GPIO_TogglePin(unsigned char port, unsigned char pin) {
-    switch (port) {
-        case 0: (*(volatile PORTA_t*) 0xF82).value ^= (1 << pin); break;
-        case 1: (*(volatile PORTA_t*) 0xF83).value ^= (1 << pin); break;
-        case 2: (*(volatile PORTA_t*) 0xF84).value ^= (1 << pin); break;
-    }
-}
+# 94 "includes/gpio.h"
+void GPIO_WritePort(unsigned char port, uint8_t value);
+# 106 "includes/gpio.h"
+uint8_t GPIO_ReadPort(unsigned char port);
+# 118 "includes/gpio.h"
+uint8_t GPIO_ReadPortDebounced(unsigned char port);
 # 12 "src/gpio.c" 2
-
-
-
 
 void GPIO_Init(void) {
     (*(volatile PORTA_t*) 0xF87).value = 0b00000000;
@@ -268,9 +244,6 @@ void GPIO_Init(void) {
     (*(volatile PORTA_t*) 0xF83).value = 0b00000000;
     (*(volatile PORTA_t*) 0xF84).value = 0b00000000;
 }
-
-
-
 
 void GPIO_SetDirection(unsigned char port, unsigned char pin, gpio_direction_t direction) {
     if (pin > 7) return;
@@ -287,9 +260,6 @@ void GPIO_SetDirection(unsigned char port, unsigned char pin, gpio_direction_t d
             break;
     }
 }
-
-
-
 
 void GPIO_Write(unsigned char port, unsigned char pin, unsigned char value) {
     if (pin > 7) return;
@@ -311,31 +281,82 @@ void GPIO_Write(unsigned char port, unsigned char pin, unsigned char value) {
     (*(volatile INTCON_t*) 0xFF2).GIE = 1;
 }
 
-
-
-
 unsigned char GPIO_Read(unsigned char port, unsigned char pin) {
     if (pin > 7) return 0;
 
     switch (port) {
-        case 0: return ((*(volatile PORTA_t*) 0xF8C).value >> pin) & 0x01;
-        case 1: return ((*(volatile PORTA_t*) 0xF8D).value >> pin) & 0x01;
-        case 2: return ((*(volatile PORTA_t*) 0xF8E).value >> pin) & 0x01;
-        default: return 0;
+        case 0:
+            return ((*(volatile PORTA_t*) 0xF87).value & (1 << pin)) ? (((*(volatile PORTA_t*) 0xF8C).value >> pin) & 0x01) : (((*(volatile PORTA_t*) 0xF82).value >> pin) & 0x01);
+        case 1:
+            return ((*(volatile PORTA_t*) 0xF88).value & (1 << pin)) ? (((*(volatile PORTA_t*) 0xF8D).value >> pin) & 0x01) : (((*(volatile PORTA_t*) 0xF83).value >> pin) & 0x01);
+        case 2:
+            return ((*(volatile PORTA_t*) 0xF89).value & (1 << pin)) ? (((*(volatile PORTA_t*) 0xF8E).value >> pin) & 0x01) : (((*(volatile PORTA_t*) 0xF84).value >> pin) & 0x01);
+        default:
+            return 0;
     }
 }
 
-
-
-
 unsigned char GPIO_ReadDebounced(unsigned char port, unsigned char pin) {
-    if (pin > 7) return 0;
+    uint8_t stable_value, temp_value;
+    uint8_t debounce_counter = 5;
 
-    unsigned char stable_state = GPIO_Read(port, pin);
-    for (int i = 0; i < 5; i++) {
-        if (GPIO_Read(port, pin) != stable_state) {
+    stable_value = GPIO_Read(port, pin);
+
+    for (uint8_t i = 0; i < debounce_counter; i++) {
+        temp_value = GPIO_Read(port, pin);
+        if (temp_value != stable_value) {
             i = 0;
+            stable_value = temp_value;
         }
     }
-    return stable_state;
+
+    return stable_value;
+}
+
+void GPIO_WritePort(unsigned char port, uint8_t value) {
+    (*(volatile INTCON_t*) 0xFF2).GIE = 0;
+
+    switch (port) {
+        case 0:
+            (*(volatile PORTA_t*) 0xF82).value = value;
+            break;
+        case 1:
+            (*(volatile PORTA_t*) 0xF83).value = value;
+            break;
+        case 2:
+            (*(volatile PORTA_t*) 0xF84).value = value;
+            break;
+    }
+
+    (*(volatile INTCON_t*) 0xFF2).GIE = 1;
+}
+
+uint8_t GPIO_ReadPort(unsigned char port) {
+    switch (port) {
+        case 0:
+            return ((*(volatile PORTA_t*) 0xF87).value == 0xFF) ? (*(volatile PORTA_t*) 0xF8C).value : (*(volatile PORTA_t*) 0xF82).value;
+        case 1:
+            return ((*(volatile PORTA_t*) 0xF88).value == 0xFF) ? (*(volatile PORTA_t*) 0xF8D).value : (*(volatile PORTA_t*) 0xF83).value;
+        case 2:
+            return ((*(volatile PORTA_t*) 0xF89).value == 0xFF) ? (*(volatile PORTA_t*) 0xF8E).value : (*(volatile PORTA_t*) 0xF84).value;
+        default:
+            return 0;
+    }
+}
+
+uint8_t GPIO_ReadPortDebounced(unsigned char port) {
+    uint8_t stable_value, temp_value;
+    uint8_t debounce_counter = 5;
+
+    stable_value = GPIO_ReadPort(port);
+
+    for (uint8_t i = 0; i < debounce_counter; i++) {
+        temp_value = GPIO_ReadPort(port);
+        if (temp_value != stable_value) {
+            i = 0;
+            stable_value = temp_value;
+        }
+    }
+
+    return stable_value;
 }

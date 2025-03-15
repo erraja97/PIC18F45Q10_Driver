@@ -196,6 +196,12 @@ typedef enum {
 } gpio_direction_t;
 
 
+typedef enum {
+    GPIO_HIGH = 1,
+    GPIO_LOW = 0
+} gpio_state_t;
+
+
 
 
 
@@ -205,55 +211,28 @@ void GPIO_Init(void);
 
 
 
+
+
+
 void GPIO_SetDirection(unsigned char port, unsigned char pin, gpio_direction_t direction);
 
 
 
 
+
+
+
 void GPIO_Write(unsigned char port, unsigned char pin, unsigned char value);
-
-
-
-
+# 69 "includes/gpio.h"
 unsigned char GPIO_Read(unsigned char port, unsigned char pin);
-
-
-
-
+# 84 "includes/gpio.h"
 unsigned char GPIO_ReadDebounced(unsigned char port, unsigned char pin);
-
-
-
-
-static __attribute__((inline)) void GPIO_SetPin(unsigned char port, unsigned char pin){
-    switch(port){
-        case 0: (*(volatile PORTA_t*) 0xF82).value |= (1 << pin); break;
-        case 1: (*(volatile PORTA_t*) 0xF83).value |= (1 << pin); break;
-        case 2: (*(volatile PORTA_t*) 0xF84).value |= (1 << pin); break;
-    }
-}
-
-
-
-
-static __attribute__((inline)) void GPIO_ClearPin(unsigned char port, unsigned char pin){
-    switch(port){
-        case 0: (*(volatile PORTA_t*) 0xF82).value &= ~(1 << pin); break;
-        case 1: (*(volatile PORTA_t*) 0xF83).value &= ~(1 << pin); break;
-        case 2: (*(volatile PORTA_t*) 0xF84).value &= ~(1 << pin); break;
-    }
-}
-
-
-
-
-static __attribute__((inline)) void GPIO_TogglePin(unsigned char port, unsigned char pin) {
-    switch (port) {
-        case 0: (*(volatile PORTA_t*) 0xF82).value ^= (1 << pin); break;
-        case 1: (*(volatile PORTA_t*) 0xF83).value ^= (1 << pin); break;
-        case 2: (*(volatile PORTA_t*) 0xF84).value ^= (1 << pin); break;
-    }
-}
+# 94 "includes/gpio.h"
+void GPIO_WritePort(unsigned char port, uint8_t value);
+# 106 "includes/gpio.h"
+uint8_t GPIO_ReadPort(unsigned char port);
+# 118 "includes/gpio.h"
+uint8_t GPIO_ReadPortDebounced(unsigned char port);
 # 11 "src/main.c" 2
 # 1 "includes/config_bits.h" 1
 # 18 "includes/config_bits.h"
@@ -284,9 +263,8 @@ static __attribute__((inline)) void GPIO_TogglePin(unsigned char port, unsigned 
 # 12 "src/main.c" 2
 # 24 "src/main.c"
 void delay_ms(unsigned int ms) {
-    volatile unsigned int i, j;
-    for (i = 0; i < ms; i++) {
-        for (j = 0; j < 500; j++) {
+    while (ms--) {
+        for (volatile unsigned int j = 0; j < 500; j++) {
             __asm__ volatile ("nop");
         }
     }
@@ -304,7 +282,7 @@ void main(void) {
 
     while (1) {
 
-        GPIO_TogglePin(0, 0);
+        GPIO_Write(0, 0, !GPIO_Read(0, 0));
 
 
         delay_ms(500);

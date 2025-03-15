@@ -1,149 +1,21 @@
 Version 4.0 HI-TECH Software Intermediate Code
-"19 includes/pic18f45q10_regs.h
-[; ;includes/pic18f45q10_regs.h: 19:     struct{
-[s S2 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S2 . RA0 RA1 RA2 RA3 RA4 RA5 RA6 RA7 ]
-"18
-[; ;includes/pic18f45q10_regs.h: 18: typedef union{
-[u S1 `S2 1 `uc 1 ]
-[n S1 . . value ]
 [p mainexit ]
-"34 includes/gpio.h
-[; ;includes/gpio.h: 34: void GPIO_Init(void);
+"40 includes/gpio.h
+[; ;includes/gpio.h: 40: void GPIO_Init(void);
 [v _GPIO_Init `(v ~T0 @X0 0 ef ]
-"41 src/main.c
-[; ;src/main.c: 41:     GPIO_SetDirection(0, 0, GPIO_OUTPUT);
+"40 src/main.c
+[; ;src/main.c: 40:     GPIO_SetDirection(0, 0, GPIO_OUTPUT);
 [c E87 1 0 .. ]
 [n E87 . GPIO_INPUT GPIO_OUTPUT  ]
-"39 includes/gpio.h
-[; ;includes/gpio.h: 39: void GPIO_SetDirection(unsigned char port, unsigned char pin, gpio_direction_t direction);
+"48 includes/gpio.h
+[; ;includes/gpio.h: 48: void GPIO_SetDirection(unsigned char port, unsigned char pin, gpio_direction_t direction);
 [v _GPIO_SetDirection `(v ~T0 @X0 0 ef3`uc`uc`E87 ]
-[v F107 `(v ~T0 @X0 1 tf2`uc`uc ]
-"59 includes/gpio.h
-[; ;includes/gpio.h: 59: static __attribute__((inline)) void GPIO_SetPin(unsigned char port, unsigned char pin){
-[v _GPIO_SetPin `TF107 ~T0 @X0 1 s ]
-{
-[e :U _GPIO_SetPin ]
-[v _port `uc ~T0 @X0 1 r1 ]
-[v _pin `uc ~T0 @X0 1 r2 ]
-[f ]
-"60
-[; ;includes/gpio.h: 60:     switch(port){
-[e $U 11  ]
-{
-"61
-[; ;includes/gpio.h: 61:         case 0: (*(volatile PORTA_t*) 0xF82).value |= (1 << pin); break;
-[e :U 12 ]
-[e =| . *U -> -> 3970 `i `*VS1 1 -> << -> 1 `i -> _pin `i `Vuc ]
-[e $U 10  ]
-"62
-[; ;includes/gpio.h: 62:         case 1: (*(volatile PORTA_t*) 0xF83).value |= (1 << pin); break;
-[e :U 13 ]
-[e =| . *U -> -> 3971 `i `*VS1 1 -> << -> 1 `i -> _pin `i `Vuc ]
-[e $U 10  ]
-"63
-[; ;includes/gpio.h: 63:         case 2: (*(volatile PORTA_t*) 0xF84).value |= (1 << pin); break;
-[e :U 14 ]
-[e =| . *U -> -> 3972 `i `*VS1 1 -> << -> 1 `i -> _pin `i `Vuc ]
-[e $U 10  ]
-"64
-[; ;includes/gpio.h: 64:     }
-}
-[e $U 10  ]
-[e :U 11 ]
-[e [\ _port , $ -> 0 `i 12
- , $ -> 1 `i 13
- , $ -> 2 `i 14
- 10 ]
-[e :U 10 ]
-"65
-[; ;includes/gpio.h: 65: }
-[e :UE 9 ]
-}
-[v F111 `(v ~T0 @X0 1 tf2`uc`uc ]
-"70
-[; ;includes/gpio.h: 70: static __attribute__((inline)) void GPIO_ClearPin(unsigned char port, unsigned char pin){
-[v _GPIO_ClearPin `TF111 ~T0 @X0 1 s ]
-{
-[e :U _GPIO_ClearPin ]
-[v _port `uc ~T0 @X0 1 r1 ]
-[v _pin `uc ~T0 @X0 1 r2 ]
-[f ]
-"71
-[; ;includes/gpio.h: 71:     switch(port){
-[e $U 17  ]
-{
-"72
-[; ;includes/gpio.h: 72:         case 0: (*(volatile PORTA_t*) 0xF82).value &= ~(1 << pin); break;
-[e :U 18 ]
-[e =& . *U -> -> 3970 `i `*VS1 1 -> ~ << -> 1 `i -> _pin `i `Vuc ]
-[e $U 16  ]
-"73
-[; ;includes/gpio.h: 73:         case 1: (*(volatile PORTA_t*) 0xF83).value &= ~(1 << pin); break;
-[e :U 19 ]
-[e =& . *U -> -> 3971 `i `*VS1 1 -> ~ << -> 1 `i -> _pin `i `Vuc ]
-[e $U 16  ]
-"74
-[; ;includes/gpio.h: 74:         case 2: (*(volatile PORTA_t*) 0xF84).value &= ~(1 << pin); break;
-[e :U 20 ]
-[e =& . *U -> -> 3972 `i `*VS1 1 -> ~ << -> 1 `i -> _pin `i `Vuc ]
-[e $U 16  ]
-"75
-[; ;includes/gpio.h: 75:     }
-}
-[e $U 16  ]
-[e :U 17 ]
-[e [\ _port , $ -> 0 `i 18
- , $ -> 1 `i 19
- , $ -> 2 `i 20
- 16 ]
-[e :U 16 ]
-"76
-[; ;includes/gpio.h: 76: }
-[e :UE 15 ]
-}
-[v F115 `(v ~T0 @X0 1 tf2`uc`uc ]
-"81
-[; ;includes/gpio.h: 81: static __attribute__((inline)) void GPIO_TogglePin(unsigned char port, unsigned char pin) {
-[v _GPIO_TogglePin `TF115 ~T0 @X0 1 s ]
-{
-[e :U _GPIO_TogglePin ]
-[v _port `uc ~T0 @X0 1 r1 ]
-[v _pin `uc ~T0 @X0 1 r2 ]
-[f ]
-"82
-[; ;includes/gpio.h: 82:     switch (port) {
-[e $U 23  ]
-{
-"83
-[; ;includes/gpio.h: 83:         case 0: (*(volatile PORTA_t*) 0xF82).value ^= (1 << pin); break;
-[e :U 24 ]
-[e =^ . *U -> -> 3970 `i `*VS1 1 -> << -> 1 `i -> _pin `i `Vuc ]
-[e $U 22  ]
-"84
-[; ;includes/gpio.h: 84:         case 1: (*(volatile PORTA_t*) 0xF83).value ^= (1 << pin); break;
-[e :U 25 ]
-[e =^ . *U -> -> 3971 `i `*VS1 1 -> << -> 1 `i -> _pin `i `Vuc ]
-[e $U 22  ]
-"85
-[; ;includes/gpio.h: 85:         case 2: (*(volatile PORTA_t*) 0xF84).value ^= (1 << pin); break;
-[e :U 26 ]
-[e =^ . *U -> -> 3972 `i `*VS1 1 -> << -> 1 `i -> _pin `i `Vuc ]
-[e $U 22  ]
-"86
-[; ;includes/gpio.h: 86:     }
-}
-[e $U 22  ]
-[e :U 23 ]
-[e [\ _port , $ -> 0 `i 24
- , $ -> 1 `i 25
- , $ -> 2 `i 26
- 22 ]
-[e :U 22 ]
-"87
-[; ;includes/gpio.h: 87: }
-[e :UE 21 ]
-}
+"56
+[; ;includes/gpio.h: 56: void GPIO_Write(unsigned char port, unsigned char pin, unsigned char value);
+[v _GPIO_Write `(v ~T0 @X0 0 ef3`uc`uc`uc ]
+"69
+[; ;includes/gpio.h: 69: unsigned char GPIO_Read(unsigned char port, unsigned char pin);
+[v _GPIO_Read `(uc ~T0 @X0 0 ef2`uc`uc ]
 "18 includes/config_bits.h
 [p x FEXTOSC  =  HS      ]
 "19
@@ -178,76 +50,71 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _ms `ui ~T0 @X0 1 r1 ]
 [f ]
 "25
-[; ;src/main.c: 25:     volatile unsigned int i, j;
-[v _i `Vui ~T0 @X0 1 a ]
-[v _j `Vui ~T0 @X0 1 a ]
-"26
-[; ;src/main.c: 26:     for (i = 0; i < ms; i++) {
+[; ;src/main.c: 25:     while (ms--) {
+[e $U 10  ]
+[e :U 11 ]
 {
-[e = _i -> -> 0 `i `ui ]
-[e $U 31  ]
-[e :U 28 ]
+"26
+[; ;src/main.c: 26:         for (volatile unsigned int j = 0; j < 500; j++) {
+{
+[v _j `Vui ~T0 @X0 1 a ]
+[e = _j -> -> 0 `i `ui ]
+[e $ < _j -> -> 500 `i `ui 13  ]
+[e $U 14  ]
+[e :U 13 ]
 {
 "27
-[; ;src/main.c: 27:         for (j = 0; j < 500; j++) {
-{
-[e = _j -> -> 0 `i `ui ]
-[e $ < _j -> -> 500 `i `ui 32  ]
-[e $U 33  ]
-[e :U 32 ]
-{
-"28
-[; ;src/main.c: 28:             __asm__ volatile ("nop");
+[; ;src/main.c: 27:             __asm__ volatile ("nop");
 [; <" nop ;# ">
-"29
-[; ;src/main.c: 29:         }
+"28
+[; ;src/main.c: 28:         }
 }
 [e ++ _j -> -> 1 `i `Vui ]
-[e $ < _j -> -> 500 `i `ui 32  ]
-[e :U 33 ]
+[e $ < _j -> -> 500 `i `ui 13  ]
+[e :U 14 ]
 }
+"29
+[; ;src/main.c: 29:     }
+}
+[e :U 10 ]
+"25
+[; ;src/main.c: 25:     while (ms--) {
+[e $ != -- _ms -> -> 1 `i `ui -> -> 0 `i `ui 11  ]
+[e :U 12 ]
 "30
-[; ;src/main.c: 30:     }
-}
-[e ++ _i -> -> 1 `i `Vui ]
-[e :U 31 ]
-[e $ < _i _ms 28  ]
-[e :U 29 ]
-}
-"31
-[; ;src/main.c: 31: }
-[e :UE 27 ]
+[; ;src/main.c: 30: }
+[e :UE 9 ]
 }
 [v $root$_main `(v ~T0 @X0 0 e ]
-"36
-[; ;src/main.c: 36: void main(void) {
+"35
+[; ;src/main.c: 35: void main(void) {
 [v _main `(v ~T0 @X0 1 ef ]
 {
 [e :U _main ]
 [f ]
-"38
-[; ;src/main.c: 38:     GPIO_Init();
+"37
+[; ;src/main.c: 37:     GPIO_Init();
 [e ( _GPIO_Init ..  ]
-"41
-[; ;src/main.c: 41:     GPIO_SetDirection(0, 0, GPIO_OUTPUT);
+"40
+[; ;src/main.c: 40:     GPIO_SetDirection(0, 0, GPIO_OUTPUT);
 [e ( _GPIO_SetDirection (3 , , -> -> 0 `i `uc -> -> 0 `i `uc . `E87 1 ]
-"43
-[; ;src/main.c: 43:     while (1) {
-[e :U 37 ]
+"42
+[; ;src/main.c: 42:     while (1) {
+[e :U 18 ]
 {
-"45
-[; ;src/main.c: 45:         GPIO_TogglePin(0, 0);
-[e ( _GPIO_TogglePin (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
-"48
-[; ;src/main.c: 48:         delay_ms(500);
+"44
+[; ;src/main.c: 44:         GPIO_Write(0, 0, !GPIO_Read(0, 0));
+[e ( _GPIO_Write (3 , , -> -> 0 `i `uc -> -> 0 `i `uc -> -> ! != -> ( _GPIO_Read (2 , -> -> 0 `i `uc -> -> 0 `i `uc `i -> 0 `i `i `uc ]
+"47
+[; ;src/main.c: 47:         delay_ms(500);
 [e ( _delay_ms (1 -> -> 500 `i `ui ]
-"49
-[; ;src/main.c: 49:     }
+"48
+[; ;src/main.c: 48:     }
 }
-[e :U 36 ]
-[e $U 37  ]
-[e :U 38 ]
-"50
-[; ;src/main.c: 50: }
-[e :UE 35 ]
+[e :U 17 ]
+[e $U 18  ]
+[e :U 19 ]
+"49
+[; ;src/main.c: 49: }
+[e :UE 16 ]
 }

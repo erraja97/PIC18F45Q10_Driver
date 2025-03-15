@@ -22,9 +22,8 @@
  * @param ms The number of milliseconds to delay.
  */
 void delay_ms(unsigned int ms) {
-    volatile unsigned int i, j;
-    for (i = 0; i < ms; i++) {
-        for (j = 0; j < 500; j++) {
+    while (ms--) {
+        for (volatile unsigned int j = 0; j < 500; j++) {
             __asm__ volatile ("nop");  // Do nothing (wastes one cycle)
         }
     }
@@ -37,16 +36,14 @@ void main(void) {
     // Initialize the GPIO system
     GPIO_Init();
 
-    // Set RB0 as output for LED
+    // Set RA0 as output for LED
     GPIO_SetDirection(LED_PORT, LED_PIN, GPIO_OUTPUT);
 
     while (1) {
-        // Toggle LED
-        GPIO_TogglePin(LED_PORT, LED_PIN);
+        // Toggle LED by reading current state and inverting it
+        GPIO_Write(LED_PORT, LED_PIN, !GPIO_Read(LED_PORT, LED_PIN));
 
         // Delay for 500ms
         delay_ms(500);
     }
 }
-
-
