@@ -1,4 +1,4 @@
-# 1 "src/main.c"
+# 1 "src/gpio.c"
 # 1 "<built-in>" 1
 # 1 "<built-in>" 3
 # 285 "<built-in>" 3
@@ -6,8 +6,8 @@
 # 1 "<built-in>" 2
 # 1 "C:\\Program Files\\Microchip\\xc8\\v3.00\\pic\\include/language_support.h" 1 3
 # 2 "<built-in>" 2
-# 1 "src/main.c" 2
-# 10 "src/main.c"
+# 1 "src/gpio.c" 2
+# 11 "src/gpio.c"
 # 1 "includes/gpio.h" 1
 # 15 "includes/gpio.h"
 # 1 "includes/pic18f45q10_regs.h" 1
@@ -254,59 +254,88 @@ static __attribute__((inline)) void GPIO_TogglePin(unsigned char port, unsigned 
         case 2: (*(volatile PORTA_t*) 0xF84).value ^= (1 << pin); break;
     }
 }
-# 11 "src/main.c" 2
-# 1 "includes/config_bits.h" 1
-# 18 "includes/config_bits.h"
-#pragma config FEXTOSC = HS
-#pragma config RSTOSC = EXTOSC
-
-
-#pragma config CLKOUTEN = OFF
-#pragma config CSWEN = ON
-
-
-#pragma config MCLRE = EXTMCLR
-#pragma config PWRTE = OFF
-#pragma config LPBOREN = OFF
-#pragma config BOREN = ON
+# 12 "src/gpio.c" 2
 
 
 
-#pragma config ZCD = OFF
-#pragma config PPS1WAY = ON
-#pragma config STVREN = ON
+
+void GPIO_Init(void) {
+    (*(volatile PORTA_t*) 0xF87).value = 0b00000000;
+    (*(volatile PORTA_t*) 0xF88).value = 0b11111111;
+    (*(volatile PORTA_t*) 0xF89).value = 0b00000000;
+
+    (*(volatile PORTA_t*) 0xF82).value = 0b00000000;
+    (*(volatile PORTA_t*) 0xF83).value = 0b00000000;
+    (*(volatile PORTA_t*) 0xF84).value = 0b00000000;
+}
 
 
-#pragma config WDTE = OFF
 
 
-#pragma config LVP = OFF
-# 12 "src/main.c" 2
-# 24 "src/main.c"
-void delay_ms(unsigned int ms) {
-    volatile unsigned int i, j;
-    for (i = 0; i < ms; i++) {
-        for (j = 0; j < 500; j++) {
-            __asm__ volatile ("nop");
-        }
+void GPIO_SetDirection(unsigned char port, unsigned char pin, gpio_direction_t direction) {
+    if (pin > 7) return;
+
+    switch (port) {
+        case 0:
+            (*(volatile PORTA_t*) 0xF87).value = (direction) ? ((*(volatile PORTA_t*) 0xF87).value | (uint8_t)(1 << pin)) : ((*(volatile PORTA_t*) 0xF87).value & (uint8_t)~(1 << pin));
+            break;
+        case 1:
+            (*(volatile PORTA_t*) 0xF88).value = (direction) ? ((*(volatile PORTA_t*) 0xF88).value | (uint8_t)(1 << pin)) : ((*(volatile PORTA_t*) 0xF88).value & (uint8_t)~(1 << pin));
+            break;
+        case 2:
+            (*(volatile PORTA_t*) 0xF89).value = (direction) ? ((*(volatile PORTA_t*) 0xF89).value | (uint8_t)(1 << pin)) : ((*(volatile PORTA_t*) 0xF89).value & (uint8_t)~(1 << pin));
+            break;
     }
 }
 
 
 
 
-void main(void) {
+void GPIO_Write(unsigned char port, unsigned char pin, unsigned char value) {
+    if (pin > 7) return;
 
-    GPIO_Init();
+    (*(volatile INTCON_t*) 0xFF2).GIE = 0;
 
-
-    GPIO_SetDirection(0, 0, GPIO_OUTPUT);
-
-    while (1) {
-
-        GPIO_TogglePin(0, 0);
-
-
-        delay_ms(500);
+    switch (port) {
+        case 0:
+            (*(volatile PORTA_t*) 0xF82).value = (value) ? ((*(volatile PORTA_t*) 0xF82).value | (uint8_t)(1 << pin)) : ((*(volatile PORTA_t*) 0xF82).value & (uint8_t)~(1 << pin));
+            break;
+        case 1:
+            (*(volatile PORTA_t*) 0xF83).value = (value) ? ((*(volatile PORTA_t*) 0xF83).value | (uint8_t)(1 << pin)) : ((*(volatile PORTA_t*) 0xF83).value & (uint8_t)~(1 << pin));
+            break;
+        case 2:
+            (*(volatile PORTA_t*) 0xF84).value = (value) ? ((*(volatile PORTA_t*) 0xF84).value | (uint8_t)(1 << pin)) : ((*(volatile PORTA_t*) 0xF84).value & (uint8_t)~(1 << pin));
+            break;
     }
+
+    (*(volatile INTCON_t*) 0xFF2).GIE = 1;
+}
+
+
+
+
+unsigned char GPIO_Read(unsigned char port, unsigned char pin) {
+    if (pin > 7) return 0;
+
+    switch (port) {
+        case 0: return ((*(volatile PORTA_t*) 0xF8C).value >> pin) & 0x01;
+        case 1: return ((*(volatile PORTA_t*) 0xF8D).value >> pin) & 0x01;
+        case 2: return ((*(volatile PORTA_t*) 0xF8E).value >> pin) & 0x01;
+        default: return 0;
+    }
+}
+
+
+
+
+unsigned char GPIO_ReadDebounced(unsigned char port, unsigned char pin) {
+    if (pin > 7) return 0;
+
+    unsigned char stable_state = GPIO_Read(port, pin);
+    for (int i = 0; i < 5; i++) {
+        if (GPIO_Read(port, pin) != stable_state) {
+            i = 0;
+        }
+    }
+    return stable_state;
 }

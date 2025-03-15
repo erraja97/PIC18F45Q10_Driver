@@ -3,6 +3,16 @@
 [d edition pro ]
 [d chip 18F45Q10 ]
 [d frameptr 4065 ]
+"41 D:\My_Projects\PIC18F45Q10_Driver\PIC18F45Q10_Driver.X\src/main.c
+[e E87 . `uc
+GPIO_INPUT 1
+GPIO_OUTPUT 0
+]
+"29 D:\My_Projects\PIC18F45Q10_Driver\PIC18F45Q10_Driver.X\src/gpio.c
+[e E87 . `uc
+GPIO_INPUT 1
+GPIO_OUTPUT 0
+]
 "4 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\fleq.c
 [v ___fleq __fleq `(b  1 e 0 0 ]
 "62 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\float.c
@@ -27,9 +37,53 @@
 [v ___lmul __lmul `(ul  1 e 4 0 ]
 "91 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\Umul64.c
 [v ___omul __omul `(uo  1 e 8 0 ]
-"11 D:\My_Projects\PIC18F45Q10_Driver\PIC18F45Q10_Driver.X\src/main.c
+"81 D:\My_Projects\PIC18F45Q10_Driver\PIC18F45Q10_Driver.X\includes/gpio.h
+[v _GPIO_TogglePin GPIO_TogglePin `T(v  1 s 1 GPIO_TogglePin ]
+"16 D:\My_Projects\PIC18F45Q10_Driver\PIC18F45Q10_Driver.X\src/gpio.c
+[v _GPIO_Init GPIO_Init `(v  1 e 1 0 ]
+"29
+[v _GPIO_SetDirection GPIO_SetDirection `(v  1 e 1 0 ]
+"71
+[v _GPIO_Read GPIO_Read `(uc  1 e 1 0 ]
+"24 D:\My_Projects\PIC18F45Q10_Driver\PIC18F45Q10_Driver.X\src/main.c
+[v _delay_ms delay_ms `(v  1 e 1 0 ]
+"36
 [v _main main `(v  1 e 1 0 ]
 [v _main main `(v  1 e 1 0 ]
 {
-"14
+"50
+} 0
+"24
+[v _delay_ms delay_ms `(v  1 e 1 0 ]
+{
+"25
+[v delay_ms@j j `VEui  1 a 2 4 ]
+[v delay_ms@i i `VEui  1 a 2 2 ]
+"24
+[v delay_ms@ms ms `ui  1 p 2 0 ]
+"31
+} 0
+"81 D:\My_Projects\PIC18F45Q10_Driver\PIC18F45Q10_Driver.X\includes/gpio.h
+[v _GPIO_TogglePin GPIO_TogglePin `T(v  1 s 1 GPIO_TogglePin ]
+{
+[v GPIO_TogglePin@port port `uc  1 p 1 wreg ]
+[v GPIO_TogglePin@port port `uc  1 p 1 wreg ]
+[v GPIO_TogglePin@pin pin `uc  1 p 1 0 ]
+[v GPIO_TogglePin@port port `uc  1 p 1 3 ]
+"87
+} 0
+"29 D:\My_Projects\PIC18F45Q10_Driver\PIC18F45Q10_Driver.X\src/gpio.c
+[v _GPIO_SetDirection GPIO_SetDirection `(v  1 e 1 0 ]
+{
+[v GPIO_SetDirection@port port `uc  1 p 1 wreg ]
+[v GPIO_SetDirection@port port `uc  1 p 1 wreg ]
+[v GPIO_SetDirection@pin pin `uc  1 p 1 0 ]
+[v GPIO_SetDirection@direction direction `E87  1 p 1 1 ]
+[v GPIO_SetDirection@port port `uc  1 p 1 5 ]
+"43
+} 0
+"16
+[v _GPIO_Init GPIO_Init `(v  1 e 1 0 ]
+{
+"24
 } 0

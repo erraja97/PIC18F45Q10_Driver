@@ -1,0 +1,404 @@
+Version 4.0 HI-TECH Software Intermediate Code
+"19 includes/pic18f45q10_regs.h
+[; ;includes/pic18f45q10_regs.h: 19:     struct{
+[s S2 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S2 . RA0 RA1 RA2 RA3 RA4 RA5 RA6 RA7 ]
+"18
+[; ;includes/pic18f45q10_regs.h: 18: typedef union{
+[u S1 `S2 1 `uc 1 ]
+[n S1 . . value ]
+"29 src/gpio.c
+[; ;src/gpio.c: 29: void GPIO_SetDirection(unsigned char port, unsigned char pin, gpio_direction_t direction) {
+[c E87 1 0 .. ]
+[n E87 . GPIO_INPUT GPIO_OUTPUT  ]
+"67 includes/pic18f45q10_regs.h
+[; ;includes/pic18f45q10_regs.h: 67:     struct {
+[s S8 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S8 . . INT0EDG INT1EDG INT2EDG . IPEN GIE ]
+"66
+[; ;includes/pic18f45q10_regs.h: 66: typedef union {
+[u S7 `S8 1 `uc 1 ]
+[n S7 . . value ]
+[v F107 `(v ~T0 @X0 1 tf2`uc`uc ]
+"59 includes/gpio.h
+[; ;includes/gpio.h: 59: static __attribute__((inline)) void GPIO_SetPin(unsigned char port, unsigned char pin){
+[v _GPIO_SetPin `TF107 ~T0 @X0 1 s ]
+{
+[e :U _GPIO_SetPin ]
+[v _port `uc ~T0 @X0 1 r1 ]
+[v _pin `uc ~T0 @X0 1 r2 ]
+[f ]
+"60
+[; ;includes/gpio.h: 60:     switch(port){
+[e $U 11  ]
+{
+"61
+[; ;includes/gpio.h: 61:         case 0: (*(volatile PORTA_t*) 0xF82).value |= (1 << pin); break;
+[e :U 12 ]
+[e =| . *U -> -> 3970 `i `*VS1 1 -> << -> 1 `i -> _pin `i `Vuc ]
+[e $U 10  ]
+"62
+[; ;includes/gpio.h: 62:         case 1: (*(volatile PORTA_t*) 0xF83).value |= (1 << pin); break;
+[e :U 13 ]
+[e =| . *U -> -> 3971 `i `*VS1 1 -> << -> 1 `i -> _pin `i `Vuc ]
+[e $U 10  ]
+"63
+[; ;includes/gpio.h: 63:         case 2: (*(volatile PORTA_t*) 0xF84).value |= (1 << pin); break;
+[e :U 14 ]
+[e =| . *U -> -> 3972 `i `*VS1 1 -> << -> 1 `i -> _pin `i `Vuc ]
+[e $U 10  ]
+"64
+[; ;includes/gpio.h: 64:     }
+}
+[e $U 10  ]
+[e :U 11 ]
+[e [\ _port , $ -> 0 `i 12
+ , $ -> 1 `i 13
+ , $ -> 2 `i 14
+ 10 ]
+[e :U 10 ]
+"65
+[; ;includes/gpio.h: 65: }
+[e :UE 9 ]
+}
+[v F111 `(v ~T0 @X0 1 tf2`uc`uc ]
+"70
+[; ;includes/gpio.h: 70: static __attribute__((inline)) void GPIO_ClearPin(unsigned char port, unsigned char pin){
+[v _GPIO_ClearPin `TF111 ~T0 @X0 1 s ]
+{
+[e :U _GPIO_ClearPin ]
+[v _port `uc ~T0 @X0 1 r1 ]
+[v _pin `uc ~T0 @X0 1 r2 ]
+[f ]
+"71
+[; ;includes/gpio.h: 71:     switch(port){
+[e $U 17  ]
+{
+"72
+[; ;includes/gpio.h: 72:         case 0: (*(volatile PORTA_t*) 0xF82).value &= ~(1 << pin); break;
+[e :U 18 ]
+[e =& . *U -> -> 3970 `i `*VS1 1 -> ~ << -> 1 `i -> _pin `i `Vuc ]
+[e $U 16  ]
+"73
+[; ;includes/gpio.h: 73:         case 1: (*(volatile PORTA_t*) 0xF83).value &= ~(1 << pin); break;
+[e :U 19 ]
+[e =& . *U -> -> 3971 `i `*VS1 1 -> ~ << -> 1 `i -> _pin `i `Vuc ]
+[e $U 16  ]
+"74
+[; ;includes/gpio.h: 74:         case 2: (*(volatile PORTA_t*) 0xF84).value &= ~(1 << pin); break;
+[e :U 20 ]
+[e =& . *U -> -> 3972 `i `*VS1 1 -> ~ << -> 1 `i -> _pin `i `Vuc ]
+[e $U 16  ]
+"75
+[; ;includes/gpio.h: 75:     }
+}
+[e $U 16  ]
+[e :U 17 ]
+[e [\ _port , $ -> 0 `i 18
+ , $ -> 1 `i 19
+ , $ -> 2 `i 20
+ 16 ]
+[e :U 16 ]
+"76
+[; ;includes/gpio.h: 76: }
+[e :UE 15 ]
+}
+[v F115 `(v ~T0 @X0 1 tf2`uc`uc ]
+"81
+[; ;includes/gpio.h: 81: static __attribute__((inline)) void GPIO_TogglePin(unsigned char port, unsigned char pin) {
+[v _GPIO_TogglePin `TF115 ~T0 @X0 1 s ]
+{
+[e :U _GPIO_TogglePin ]
+[v _port `uc ~T0 @X0 1 r1 ]
+[v _pin `uc ~T0 @X0 1 r2 ]
+[f ]
+"82
+[; ;includes/gpio.h: 82:     switch (port) {
+[e $U 23  ]
+{
+"83
+[; ;includes/gpio.h: 83:         case 0: (*(volatile PORTA_t*) 0xF82).value ^= (1 << pin); break;
+[e :U 24 ]
+[e =^ . *U -> -> 3970 `i `*VS1 1 -> << -> 1 `i -> _pin `i `Vuc ]
+[e $U 22  ]
+"84
+[; ;includes/gpio.h: 84:         case 1: (*(volatile PORTA_t*) 0xF83).value ^= (1 << pin); break;
+[e :U 25 ]
+[e =^ . *U -> -> 3971 `i `*VS1 1 -> << -> 1 `i -> _pin `i `Vuc ]
+[e $U 22  ]
+"85
+[; ;includes/gpio.h: 85:         case 2: (*(volatile PORTA_t*) 0xF84).value ^= (1 << pin); break;
+[e :U 26 ]
+[e =^ . *U -> -> 3972 `i `*VS1 1 -> << -> 1 `i -> _pin `i `Vuc ]
+[e $U 22  ]
+"86
+[; ;includes/gpio.h: 86:     }
+}
+[e $U 22  ]
+[e :U 23 ]
+[e [\ _port , $ -> 0 `i 24
+ , $ -> 1 `i 25
+ , $ -> 2 `i 26
+ 22 ]
+[e :U 22 ]
+"87
+[; ;includes/gpio.h: 87: }
+[e :UE 21 ]
+}
+"16 src/gpio.c
+[; ;src/gpio.c: 16: void GPIO_Init(void) {
+[v _GPIO_Init `(v ~T0 @X0 1 ef ]
+{
+[e :U _GPIO_Init ]
+[f ]
+"17
+[; ;src/gpio.c: 17:     (*(volatile PORTA_t*) 0xF87).value = 0b00000000;
+[e = . *U -> -> 3975 `i `*VS1 1 -> -> 0 `i `uc ]
+"18
+[; ;src/gpio.c: 18:     (*(volatile PORTA_t*) 0xF88).value = 0b11111111;
+[e = . *U -> -> 3976 `i `*VS1 1 -> -> 255 `i `uc ]
+"19
+[; ;src/gpio.c: 19:     (*(volatile PORTA_t*) 0xF89).value = 0b00000000;
+[e = . *U -> -> 3977 `i `*VS1 1 -> -> 0 `i `uc ]
+"21
+[; ;src/gpio.c: 21:     (*(volatile PORTA_t*) 0xF82).value = 0b00000000;
+[e = . *U -> -> 3970 `i `*VS1 1 -> -> 0 `i `uc ]
+"22
+[; ;src/gpio.c: 22:     (*(volatile PORTA_t*) 0xF83).value = 0b00000000;
+[e = . *U -> -> 3971 `i `*VS1 1 -> -> 0 `i `uc ]
+"23
+[; ;src/gpio.c: 23:     (*(volatile PORTA_t*) 0xF84).value = 0b00000000;
+[e = . *U -> -> 3972 `i `*VS1 1 -> -> 0 `i `uc ]
+"24
+[; ;src/gpio.c: 24: }
+[e :UE 27 ]
+}
+"29
+[; ;src/gpio.c: 29: void GPIO_SetDirection(unsigned char port, unsigned char pin, gpio_direction_t direction) {
+[v _GPIO_SetDirection `(v ~T0 @X0 1 ef3`uc`uc`E87 ]
+{
+[e :U _GPIO_SetDirection ]
+[v _port `uc ~T0 @X0 1 r1 ]
+[v _pin `uc ~T0 @X0 1 r2 ]
+[v _direction `E87 ~T0 @X0 1 r3 ]
+[f ]
+"30
+[; ;src/gpio.c: 30:     if (pin > 7) return;
+[e $ ! > -> _pin `i -> 7 `i 29  ]
+[e $UE 28  ]
+[e :U 29 ]
+"32
+[; ;src/gpio.c: 32:     switch (port) {
+[e $U 31  ]
+{
+"33
+[; ;src/gpio.c: 33:         case 0:
+[e :U 32 ]
+"34
+[; ;src/gpio.c: 34:             (*(volatile PORTA_t*) 0xF87).value = (direction) ? ((*(volatile PORTA_t*) 0xF87).value | (uint8_t)(1 << pin)) : ((*(volatile PORTA_t*) 0xF87).value & (uint8_t)~(1 << pin));
+[e = . *U -> -> 3975 `i `*VS1 1 -> ? != -> _direction `ui -> -> 0 `i `ui : | -> . *U -> -> 3975 `i `*VS1 1 `i -> -> << -> 1 `i -> _pin `i `uc `i & -> . *U -> -> 3975 `i `*VS1 1 `i -> -> ~ << -> 1 `i -> _pin `i `uc `i `uc ]
+"35
+[; ;src/gpio.c: 35:             break;
+[e $U 30  ]
+"36
+[; ;src/gpio.c: 36:         case 1:
+[e :U 33 ]
+"37
+[; ;src/gpio.c: 37:             (*(volatile PORTA_t*) 0xF88).value = (direction) ? ((*(volatile PORTA_t*) 0xF88).value | (uint8_t)(1 << pin)) : ((*(volatile PORTA_t*) 0xF88).value & (uint8_t)~(1 << pin));
+[e = . *U -> -> 3976 `i `*VS1 1 -> ? != -> _direction `ui -> -> 0 `i `ui : | -> . *U -> -> 3976 `i `*VS1 1 `i -> -> << -> 1 `i -> _pin `i `uc `i & -> . *U -> -> 3976 `i `*VS1 1 `i -> -> ~ << -> 1 `i -> _pin `i `uc `i `uc ]
+"38
+[; ;src/gpio.c: 38:             break;
+[e $U 30  ]
+"39
+[; ;src/gpio.c: 39:         case 2:
+[e :U 34 ]
+"40
+[; ;src/gpio.c: 40:             (*(volatile PORTA_t*) 0xF89).value = (direction) ? ((*(volatile PORTA_t*) 0xF89).value | (uint8_t)(1 << pin)) : ((*(volatile PORTA_t*) 0xF89).value & (uint8_t)~(1 << pin));
+[e = . *U -> -> 3977 `i `*VS1 1 -> ? != -> _direction `ui -> -> 0 `i `ui : | -> . *U -> -> 3977 `i `*VS1 1 `i -> -> << -> 1 `i -> _pin `i `uc `i & -> . *U -> -> 3977 `i `*VS1 1 `i -> -> ~ << -> 1 `i -> _pin `i `uc `i `uc ]
+"41
+[; ;src/gpio.c: 41:             break;
+[e $U 30  ]
+"42
+[; ;src/gpio.c: 42:     }
+}
+[e $U 30  ]
+[e :U 31 ]
+[e [\ _port , $ -> 0 `i 32
+ , $ -> 1 `i 33
+ , $ -> 2 `i 34
+ 30 ]
+[e :U 30 ]
+"43
+[; ;src/gpio.c: 43: }
+[e :UE 28 ]
+}
+"48
+[; ;src/gpio.c: 48: void GPIO_Write(unsigned char port, unsigned char pin, unsigned char value) {
+[v _GPIO_Write `(v ~T0 @X0 1 ef3`uc`uc`uc ]
+{
+[e :U _GPIO_Write ]
+[v _port `uc ~T0 @X0 1 r1 ]
+[v _pin `uc ~T0 @X0 1 r2 ]
+[v _value `uc ~T0 @X0 1 r3 ]
+[f ]
+"49
+[; ;src/gpio.c: 49:     if (pin > 7) return;
+[e $ ! > -> _pin `i -> 7 `i 36  ]
+[e $UE 35  ]
+[e :U 36 ]
+"51
+[; ;src/gpio.c: 51:     (*(volatile INTCON_t*) 0xFF2).GIE = 0;
+[e = . . *U -> -> 4082 `i `*VS7 0 6 -> -> 0 `i `uc ]
+"53
+[; ;src/gpio.c: 53:     switch (port) {
+[e $U 38  ]
+{
+"54
+[; ;src/gpio.c: 54:         case 0:
+[e :U 39 ]
+"55
+[; ;src/gpio.c: 55:             (*(volatile PORTA_t*) 0xF82).value = (value) ? ((*(volatile PORTA_t*) 0xF82).value | (uint8_t)(1 << pin)) : ((*(volatile PORTA_t*) 0xF82).value & (uint8_t)~(1 << pin));
+[e = . *U -> -> 3970 `i `*VS1 1 -> ? != -> _value `i -> 0 `i : | -> . *U -> -> 3970 `i `*VS1 1 `i -> -> << -> 1 `i -> _pin `i `uc `i & -> . *U -> -> 3970 `i `*VS1 1 `i -> -> ~ << -> 1 `i -> _pin `i `uc `i `uc ]
+"56
+[; ;src/gpio.c: 56:             break;
+[e $U 37  ]
+"57
+[; ;src/gpio.c: 57:         case 1:
+[e :U 40 ]
+"58
+[; ;src/gpio.c: 58:             (*(volatile PORTA_t*) 0xF83).value = (value) ? ((*(volatile PORTA_t*) 0xF83).value | (uint8_t)(1 << pin)) : ((*(volatile PORTA_t*) 0xF83).value & (uint8_t)~(1 << pin));
+[e = . *U -> -> 3971 `i `*VS1 1 -> ? != -> _value `i -> 0 `i : | -> . *U -> -> 3971 `i `*VS1 1 `i -> -> << -> 1 `i -> _pin `i `uc `i & -> . *U -> -> 3971 `i `*VS1 1 `i -> -> ~ << -> 1 `i -> _pin `i `uc `i `uc ]
+"59
+[; ;src/gpio.c: 59:             break;
+[e $U 37  ]
+"60
+[; ;src/gpio.c: 60:         case 2:
+[e :U 41 ]
+"61
+[; ;src/gpio.c: 61:             (*(volatile PORTA_t*) 0xF84).value = (value) ? ((*(volatile PORTA_t*) 0xF84).value | (uint8_t)(1 << pin)) : ((*(volatile PORTA_t*) 0xF84).value & (uint8_t)~(1 << pin));
+[e = . *U -> -> 3972 `i `*VS1 1 -> ? != -> _value `i -> 0 `i : | -> . *U -> -> 3972 `i `*VS1 1 `i -> -> << -> 1 `i -> _pin `i `uc `i & -> . *U -> -> 3972 `i `*VS1 1 `i -> -> ~ << -> 1 `i -> _pin `i `uc `i `uc ]
+"62
+[; ;src/gpio.c: 62:             break;
+[e $U 37  ]
+"63
+[; ;src/gpio.c: 63:     }
+}
+[e $U 37  ]
+[e :U 38 ]
+[e [\ _port , $ -> 0 `i 39
+ , $ -> 1 `i 40
+ , $ -> 2 `i 41
+ 37 ]
+[e :U 37 ]
+"65
+[; ;src/gpio.c: 65:     (*(volatile INTCON_t*) 0xFF2).GIE = 1;
+[e = . . *U -> -> 4082 `i `*VS7 0 6 -> -> 1 `i `uc ]
+"66
+[; ;src/gpio.c: 66: }
+[e :UE 35 ]
+}
+"71
+[; ;src/gpio.c: 71: unsigned char GPIO_Read(unsigned char port, unsigned char pin) {
+[v _GPIO_Read `(uc ~T0 @X0 1 ef2`uc`uc ]
+{
+[e :U _GPIO_Read ]
+[v _port `uc ~T0 @X0 1 r1 ]
+[v _pin `uc ~T0 @X0 1 r2 ]
+[f ]
+"72
+[; ;src/gpio.c: 72:     if (pin > 7) return 0;
+[e $ ! > -> _pin `i -> 7 `i 43  ]
+[e ) -> -> 0 `i `uc ]
+[e $UE 42  ]
+[e :U 43 ]
+"74
+[; ;src/gpio.c: 74:     switch (port) {
+[e $U 45  ]
+{
+"75
+[; ;src/gpio.c: 75:         case 0: return ((*(volatile PORTA_t*) 0xF8C).value >> pin) & 0x01;
+[e :U 46 ]
+[e ) -> & >> -> . *U -> -> 3980 `i `*VS1 1 `i -> _pin `i -> 1 `i `uc ]
+[e $UE 42  ]
+"76
+[; ;src/gpio.c: 76:         case 1: return ((*(volatile PORTA_t*) 0xF8D).value >> pin) & 0x01;
+[e :U 47 ]
+[e ) -> & >> -> . *U -> -> 3981 `i `*VS1 1 `i -> _pin `i -> 1 `i `uc ]
+[e $UE 42  ]
+"77
+[; ;src/gpio.c: 77:         case 2: return ((*(volatile PORTA_t*) 0xF8E).value >> pin) & 0x01;
+[e :U 48 ]
+[e ) -> & >> -> . *U -> -> 3982 `i `*VS1 1 `i -> _pin `i -> 1 `i `uc ]
+[e $UE 42  ]
+"78
+[; ;src/gpio.c: 78:         default: return 0;
+[e :U 49 ]
+[e ) -> -> 0 `i `uc ]
+[e $UE 42  ]
+"79
+[; ;src/gpio.c: 79:     }
+}
+[e $U 44  ]
+[e :U 45 ]
+[e [\ _port , $ -> 0 `i 46
+ , $ -> 1 `i 47
+ , $ -> 2 `i 48
+ 49 ]
+[e :U 44 ]
+"80
+[; ;src/gpio.c: 80: }
+[e :UE 42 ]
+}
+"85
+[; ;src/gpio.c: 85: unsigned char GPIO_ReadDebounced(unsigned char port, unsigned char pin) {
+[v _GPIO_ReadDebounced `(uc ~T0 @X0 1 ef2`uc`uc ]
+{
+[e :U _GPIO_ReadDebounced ]
+[v _port `uc ~T0 @X0 1 r1 ]
+[v _pin `uc ~T0 @X0 1 r2 ]
+[f ]
+"86
+[; ;src/gpio.c: 86:     if (pin > 7) return 0;
+[e $ ! > -> _pin `i -> 7 `i 51  ]
+[e ) -> -> 0 `i `uc ]
+[e $UE 50  ]
+[e :U 51 ]
+"88
+[; ;src/gpio.c: 88:     unsigned char stable_state = GPIO_Read(port, pin);
+[v _stable_state `uc ~T0 @X0 1 a ]
+[e = _stable_state ( _GPIO_Read (2 , _port _pin ]
+"89
+[; ;src/gpio.c: 89:     for (int i = 0; i < 5; i++) {
+{
+[v _i `i ~T0 @X0 1 a ]
+[e = _i -> 0 `i ]
+[e $ < _i -> 5 `i 52  ]
+[e $U 53  ]
+[e :U 52 ]
+{
+"90
+[; ;src/gpio.c: 90:         if (GPIO_Read(port, pin) != stable_state) {
+[e $ ! != -> ( _GPIO_Read (2 , _port _pin `i -> _stable_state `i 55  ]
+{
+"91
+[; ;src/gpio.c: 91:             i = 0;
+[e = _i -> 0 `i ]
+"92
+[; ;src/gpio.c: 92:         }
+}
+[e :U 55 ]
+"93
+[; ;src/gpio.c: 93:     }
+}
+[e ++ _i -> 1 `i ]
+[e $ < _i -> 5 `i 52  ]
+[e :U 53 ]
+}
+"94
+[; ;src/gpio.c: 94:     return stable_state;
+[e ) _stable_state ]
+[e $UE 50  ]
+"95
+[; ;src/gpio.c: 95: }
+[e :UE 50 ]
+}
