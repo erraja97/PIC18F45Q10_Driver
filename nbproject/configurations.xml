@@ -26,6 +26,7 @@
       <itemPath>src/main.c</itemPath>
       <itemPath>src/gpio.c</itemPath>
     </logicalFolder>
+    <itemPath>README.md</itemPath>
   </logicalFolder>
   <sourceRootList>
     <Elem>src</Elem>

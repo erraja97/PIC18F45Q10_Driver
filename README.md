@@ -15,7 +15,7 @@ The goal is to build **bare-metal drivers from scratch**, **without using `xc.h`
 
 ---
 
-## **1?? Development Environment**
+## **1.Development Environment**
 | **Component**      | **Version / Details** |
 |--------------------|----------------------|
 | **MPLAB X IDE**    | v6.x                 |
@@ -26,7 +26,7 @@ The goal is to build **bare-metal drivers from scratch**, **without using `xc.h`
 
 ---
 
-## **2?? Project Structure**
+## **2.Project Structure**
 ```
 /PIC18F45Q10_Bootcamp
   ??? src/
@@ -49,7 +49,7 @@ The goal is to build **bare-metal drivers from scratch**, **without using `xc.h`
 
 ---
 
-## **3?? Implemented Drivers**
+## **3.Implemented Drivers**
 ### **? GPIO Driver (`gpio.h`, `gpio.c`)**
 - **Supports Input & Output Configuration**
 - **Uses `LATx` for Outputs & `PORTx` for Inputs**
@@ -73,7 +73,7 @@ The goal is to build **bare-metal drivers from scratch**, **without using `xc.h`
 
 ---
 
-## **4?? MCU Configuration Bits (`config_bits.h`)**
+## **4.MCU Configuration Bits (`config_bits.h`)**
 We wrote **custom configuration settings** to ensure the correct system behavior.
 
 | **Feature**   | **Setting** |
@@ -88,7 +88,7 @@ We wrote **custom configuration settings** to ensure the correct system behavior
 
 ---
 
-## **5?? Example Test Programs**
+## **5.Example Test Programs**
 We moved all test programs to `examples/`, keeping `main.c` unchanged.
 
 ### ? **1. Blinking LED Test (`example_blink_led.c`)**
