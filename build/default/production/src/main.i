@@ -316,14 +316,7 @@ void GPIO_SetDigitalMode(unsigned char port, unsigned char pin);
 
 #pragma config LVP = OFF
 # 12 "src/main.c" 2
-
-
-
-
-
-
-
-
+# 24 "src/main.c"
 # 1 "src/../examples/example_push_button.c" 1
 # 23 "src/../examples/example_push_button.c"
 void init_push_button(void) {
@@ -364,8 +357,8 @@ void Example_Run(void) {
         }
     }
 }
-# 21 "src/main.c" 2
-# 31 "src/main.c"
+# 25 "src/main.c" 2
+# 35 "src/main.c"
 void main(void) {
     Example_Run();
 }

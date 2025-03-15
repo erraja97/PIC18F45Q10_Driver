@@ -12,7 +12,7 @@
 
 /** Select the active example */
 // Change this value to switch between examples
-#define EXAMPLE_MODE  2 
+#define EXAMPLE_MODE  2
 
 #ifndef EXAMPLE_MODE
     #define EXAMPLE_MODE  2  // Default to Push Button Example if not set

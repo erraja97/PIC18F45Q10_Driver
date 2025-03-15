@@ -1,7 +1,7 @@
 
 
 Microchip MPLAB XC8 Assembler V3.00 build 20241204225717 
-                                                                                               Sat Mar 15 19:33:20 2025
+                                                                                               Sat Mar 15 19:47:57 2025
 
 Microchip MPLAB XC8 C Compiler v3.00 (Free license) build 20241204225717 Og1 
      1                           	processor	18F45Q10
@@ -252,7 +252,7 @@ Microchip MPLAB XC8 C Compiler v3.00 (Free license) build 20241204225717 Og1
    238 ;;
    239 ;; *************** function _main *****************
    240 ;; Defined at:
-   241 ;;		line 31 in file "src/main.c"
+   241 ;;		line 35 in file "src/main.c"
    242 ;; Parameters:    Size  Location     Type
    243 ;;		None
    244 ;; Auto vars:     Size  Location     Type
@@ -285,7 +285,7 @@ Microchip MPLAB XC8 C Compiler v3.00 (Free license) build 20241204225717 Og1
    271   000FF8                     _main:
    272                           	callstack 28
    273   000FF8                     
-   274                           ;src/main.c: 32:     Example_Run();
+   274                           ;src/main.c: 36:     Example_Run();
    275   000FF8  EC4F  F007         	call	_Example_Run	;wreg free
    276   000FFC  EFFE  F03F         	goto	start
    277   001000                     __end_of_main:
@@ -2001,7 +2001,7 @@ DATA                 0      0      22      0.0%
 
 
 Microchip Technology PIC18 Macro Assembler V3.00 build 20241204225717 
-Symbol Table                                                                                   Sat Mar 15 19:33:20 2025
+Symbol Table                                                                                   Sat Mar 15 19:47:57 2025
 
              ??_GPIO_SetDigitalMode 0002                                  l22 0F30  
                                 l40 0FEC                                  l25 0F66  
