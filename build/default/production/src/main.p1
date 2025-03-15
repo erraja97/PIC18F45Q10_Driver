@@ -1,0 +1,172 @@
+Version 4.0 HI-TECH Software Intermediate Code
+"24 src/../examples/example_push_button.c
+[; ;src/../examples/example_push_button.c: 24:     GPIO_SetDirection(1, 0, GPIO_INPUT);
+[c E113 1 0 .. ]
+[n E113 . GPIO_INPUT GPIO_OUTPUT  ]
+"48 includes/gpio.h
+[; ;includes/gpio.h: 48: void GPIO_SetDirection(unsigned char port, unsigned char pin, gpio_direction_t direction);
+[v _GPIO_SetDirection `(v ~T0 @X0 0 ef3`uc`uc`E113 ]
+"139
+[; ;includes/gpio.h: 139: void GPIO_SetDigitalMode(unsigned char port, unsigned char pin);
+[v _GPIO_SetDigitalMode `(v ~T0 @X0 0 ef2`uc`uc ]
+"125
+[; ;includes/gpio.h: 125: void GPIO_EnablePullUp(unsigned char port, unsigned char pin);
+[v _GPIO_EnablePullUp `(v ~T0 @X0 0 ef2`uc`uc ]
+"40
+[; ;includes/gpio.h: 40: void GPIO_Init(void);
+[v _GPIO_Init `(v ~T0 @X0 0 ef ]
+"84
+[; ;includes/gpio.h: 84: unsigned char GPIO_ReadDebounced(unsigned char port, unsigned char pin);
+[v _GPIO_ReadDebounced `(uc ~T0 @X0 0 ef2`uc`uc ]
+"56
+[; ;includes/gpio.h: 56: void GPIO_Write(unsigned char port, unsigned char pin, unsigned char value);
+[v _GPIO_Write `(v ~T0 @X0 0 ef3`uc`uc`uc ]
+"69
+[; ;includes/gpio.h: 69: unsigned char GPIO_Read(unsigned char port, unsigned char pin);
+[v _GPIO_Read `(uc ~T0 @X0 0 ef2`uc`uc ]
+[p mainexit ]
+"18 includes/config_bits.h
+[p x FEXTOSC  =  HS      ]
+"19
+[p x RSTOSC  =  EXTOSC   ]
+"22
+[p x CLKOUTEN  =  OFF    ]
+"23
+[p x CSWEN  =  ON        ]
+"26
+[p x MCLRE  =  EXTMCLR   ]
+"27
+[p x PWRTE  =  OFF       ]
+"28
+[p x LPBOREN  =  OFF     ]
+"29
+[p x BOREN  =  ON        ]
+"33
+[p x ZCD  =  OFF         ]
+"34
+[p x PPS1WAY  =  ON      ]
+"35
+[p x STVREN  =  ON       ]
+"38
+[p x WDTE  =  OFF        ]
+"41
+[p x LVP  =  OFF         ]
+"23 src/../examples/example_push_button.c
+[; ;src/../examples/example_push_button.c: 23: void init_push_button(void) {
+[v _init_push_button `(v ~T0 @X0 1 ef ]
+{
+[e :U _init_push_button ]
+[f ]
+"24
+[; ;src/../examples/example_push_button.c: 24:     GPIO_SetDirection(1, 0, GPIO_INPUT);
+[e ( _GPIO_SetDirection (3 , , -> -> 1 `i `uc -> -> 0 `i `uc . `E113 0 ]
+"25
+[; ;src/../examples/example_push_button.c: 25:     GPIO_SetDigitalMode(1, 0);
+[e ( _GPIO_SetDigitalMode (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
+"26
+[; ;src/../examples/example_push_button.c: 26:     GPIO_EnablePullUp(1, 0);
+[e ( _GPIO_EnablePullUp (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
+"27
+[; ;src/../examples/example_push_button.c: 27: }
+[e :UE 13 ]
+}
+"32
+[; ;src/../examples/example_push_button.c: 32: void delay_ms(unsigned int ms) {
+[v _delay_ms `(v ~T0 @X0 1 ef1`ui ]
+{
+[e :U _delay_ms ]
+[v _ms `ui ~T0 @X0 1 r1 ]
+[f ]
+"33
+[; ;src/../examples/example_push_button.c: 33:     while (ms--) {
+[e $U 15  ]
+[e :U 16 ]
+{
+"34
+[; ;src/../examples/example_push_button.c: 34:         for (volatile unsigned int j = 0; j < 500; j++) {
+{
+[v _j `Vui ~T0 @X0 1 a ]
+[e = _j -> -> 0 `i `ui ]
+[e $ < _j -> -> 500 `i `ui 18  ]
+[e $U 19  ]
+[e :U 18 ]
+{
+"35
+[; ;src/../examples/example_push_button.c: 35:             __asm__ volatile ("nop");
+[; <" nop ;# ">
+"36
+[; ;src/../examples/example_push_button.c: 36:         }
+}
+[e ++ _j -> -> 1 `i `Vui ]
+[e $ < _j -> -> 500 `i `ui 18  ]
+[e :U 19 ]
+}
+"37
+[; ;src/../examples/example_push_button.c: 37:     }
+}
+[e :U 15 ]
+"33
+[; ;src/../examples/example_push_button.c: 33:     while (ms--) {
+[e $ != -- _ms -> -> 1 `i `ui -> -> 0 `i `ui 16  ]
+[e :U 17 ]
+"38
+[; ;src/../examples/example_push_button.c: 38: }
+[e :UE 14 ]
+}
+"43
+[; ;src/../examples/example_push_button.c: 43: void Example_Run(void) {
+[v _Example_Run `(v ~T0 @X0 1 ef ]
+{
+[e :U _Example_Run ]
+[f ]
+"44
+[; ;src/../examples/example_push_button.c: 44:     GPIO_Init();
+[e ( _GPIO_Init ..  ]
+"45
+[; ;src/../examples/example_push_button.c: 45:     init_push_button();
+[e ( _init_push_button ..  ]
+"48
+[; ;src/../examples/example_push_button.c: 48:     GPIO_SetDirection(0, 0, GPIO_OUTPUT);
+[e ( _GPIO_SetDirection (3 , , -> -> 0 `i `uc -> -> 0 `i `uc . `E113 1 ]
+"50
+[; ;src/../examples/example_push_button.c: 50:     while (1) {
+[e :U 23 ]
+{
+"52
+[; ;src/../examples/example_push_button.c: 52:         if (!GPIO_ReadDebounced(1, 0)) {
+[e $ ! ! != -> ( _GPIO_ReadDebounced (2 , -> -> 1 `i `uc -> -> 0 `i `uc `i -> 0 `i 25  ]
+{
+"54
+[; ;src/../examples/example_push_button.c: 54:             GPIO_Write(0, 0, !GPIO_Read(0, 0));
+[e ( _GPIO_Write (3 , , -> -> 0 `i `uc -> -> 0 `i `uc -> -> ! != -> ( _GPIO_Read (2 , -> -> 0 `i `uc -> -> 0 `i `uc `i -> 0 `i `i `uc ]
+"57
+[; ;src/../examples/example_push_button.c: 57:             delay_ms(250);
+[e ( _delay_ms (1 -> -> 250 `i `ui ]
+"58
+[; ;src/../examples/example_push_button.c: 58:         }
+}
+[e :U 25 ]
+"59
+[; ;src/../examples/example_push_button.c: 59:     }
+}
+[e :U 22 ]
+[e $U 23  ]
+[e :U 24 ]
+"60
+[; ;src/../examples/example_push_button.c: 60: }
+[e :UE 21 ]
+}
+[v $root$_main `(v ~T0 @X0 0 e ]
+"31 src/main.c
+[; ;src/main.c: 31: void main(void) {
+[v _main `(v ~T0 @X0 1 ef ]
+{
+[e :U _main ]
+[f ]
+"32
+[; ;src/main.c: 32:     Example_Run();
+[e ( _Example_Run ..  ]
+"33
+[; ;src/main.c: 33: }
+[e :UE 26 ]
+}

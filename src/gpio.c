@@ -136,6 +136,48 @@ uint8_t GPIO_ReadPortDebounced(unsigned char port) {
     return stable_value;
 }
 
+void GPIO_EnablePullUp(unsigned char port, unsigned char pin) {
+    switch (port) {
+        case GPIO_PORTA:
+            WPUA.value |= (1 << pin);
+            break;
+        case GPIO_PORTB:
+            WPUB.value |= (1 << pin);
+            break;
+        case GPIO_PORTC:
+            WPUC.value |= (1 << pin);
+            break;
+    }
+}
+
+void GPIO_DisablePullUp(unsigned char port, unsigned char pin) {
+    switch (port) {
+        case GPIO_PORTA:
+            WPUA.value &= ~(1 << pin);
+            break;
+        case GPIO_PORTB:
+            WPUB.value &= ~(1 << pin);
+            break;
+        case GPIO_PORTC:
+            WPUC.value &= ~(1 << pin);
+            break;
+    }
+}
+
+void GPIO_SetDigitalMode(unsigned char port, unsigned char pin) {
+    switch (port) {
+        case GPIO_PORTA:
+            ANSELA.value &= ~(1 << pin);
+            break;
+        case GPIO_PORTB:
+            ANSELB.value &= ~(1 << pin);
+            break;
+        case GPIO_PORTC:
+            ANSELC.value &= ~(1 << pin);
+            break;
+    }
+}
+
 
 
 

@@ -7,9 +7,7 @@
 # 1 "C:\\Program Files\\Microchip\\xc8\\v3.00\\pic\\include/language_support.h" 1 3
 # 2 "<built-in>" 2
 # 1 "src/main.c" 2
-# 16 "src/main.c"
-# 1 "src/../examples/example_push_button.c" 1
-# 10 "src/../examples/example_push_button.c"
+# 10 "src/main.c"
 # 1 "includes/gpio.h" 1
 # 15 "includes/gpio.h"
 # 1 "includes/pic18f45q10_regs.h" 1
@@ -182,6 +180,40 @@ typedef union {
     };
     uint8_t value;
 } INTCON_t;
+
+
+
+
+typedef union {
+    struct {
+        uint8_t WPU0 : 1;
+        uint8_t WPU1 : 1;
+        uint8_t WPU2 : 1;
+        uint8_t WPU3 : 1;
+        uint8_t WPU4 : 1;
+        uint8_t WPU5 : 1;
+        uint8_t WPU6 : 1;
+        uint8_t WPU7 : 1;
+    };
+    uint8_t value;
+} WPU_t;
+
+
+
+
+typedef union {
+    struct {
+        uint8_t ANS0 : 1;
+        uint8_t ANS1 : 1;
+        uint8_t ANS2 : 1;
+        uint8_t ANS3 : 1;
+        uint8_t ANS4 : 1;
+        uint8_t ANS5 : 1;
+        uint8_t ANS6 : 1;
+        uint8_t ANS7 : 1;
+    };
+    uint8_t value;
+} ANSEL_t;
 # 16 "includes/gpio.h" 2
 # 1 "includes/config.h" 1
 # 17 "includes/gpio.h" 2
@@ -235,7 +267,28 @@ void GPIO_WritePort(unsigned char port, uint8_t value);
 uint8_t GPIO_ReadPort(unsigned char port);
 # 118 "includes/gpio.h"
 uint8_t GPIO_ReadPortDebounced(unsigned char port);
-# 11 "src/../examples/example_push_button.c" 2
+
+
+
+
+
+
+void GPIO_EnablePullUp(unsigned char port, unsigned char pin);
+
+
+
+
+
+
+void GPIO_DisablePullUp(unsigned char port, unsigned char pin);
+
+
+
+
+
+
+void GPIO_SetDigitalMode(unsigned char port, unsigned char pin);
+# 11 "src/main.c" 2
 # 1 "includes/config_bits.h" 1
 # 18 "includes/config_bits.h"
 #pragma config FEXTOSC = HS
@@ -262,8 +315,26 @@ uint8_t GPIO_ReadPortDebounced(unsigned char port);
 
 
 #pragma config LVP = OFF
-# 12 "src/../examples/example_push_button.c" 2
+# 12 "src/main.c" 2
+
+
+
+
+
+
+
+
+# 1 "src/../examples/example_push_button.c" 1
 # 23 "src/../examples/example_push_button.c"
+void init_push_button(void) {
+    GPIO_SetDirection(1, 0, GPIO_INPUT);
+    GPIO_SetDigitalMode(1, 0);
+    GPIO_EnablePullUp(1, 0);
+}
+
+
+
+
 void delay_ms(unsigned int ms) {
     while (ms--) {
         for (volatile unsigned int j = 0; j < 500; j++) {
@@ -275,36 +346,16 @@ void delay_ms(unsigned int ms) {
 
 
 
-void init_push_button(void) {
-    GPIO_SetDirection(1, 0, GPIO_INPUT);
-
-
-    ANSELB = 0x00;
-
-
-    WPUB |= (1 << 0);
-
-
-    OPTION_REGbits.nWPUEN = 0;
-}
-
-
-
-
 void Example_Run(void) {
-
     GPIO_Init();
     init_push_button();
 
 
     GPIO_SetDirection(0, 0, GPIO_OUTPUT);
 
-
-    GPIO_SetDirection(1, 0, GPIO_INPUT);
-
     while (1) {
 
-        if (GPIO_ReadDebounced(1, 0)) {
+        if (!GPIO_ReadDebounced(1, 0)) {
 
             GPIO_Write(0, 0, !GPIO_Read(0, 0));
 
@@ -313,8 +364,8 @@ void Example_Run(void) {
         }
     }
 }
-# 17 "src/main.c" 2
-# 27 "src/main.c"
+# 21 "src/main.c" 2
+# 31 "src/main.c"
 void main(void) {
     Example_Run();
 }

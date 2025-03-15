@@ -76,8 +76,40 @@ typedef union {
     uint8_t value;
 } INTCON_t;
 
-/** Memory-mapped definition of INTCON at address `0xFF2` */
-#define INTCON   (*(volatile INTCON_t*) 0xFF2)
+/**
+ * @brief Weak pull up control on GPIO
+ */
+typedef union {
+    struct {
+        uint8_t WPU0 : 1;
+        uint8_t WPU1 : 1;
+        uint8_t WPU2 : 1;
+        uint8_t WPU3 : 1;
+        uint8_t WPU4 : 1;
+        uint8_t WPU5 : 1;
+        uint8_t WPU6 : 1;
+        uint8_t WPU7 : 1;
+    };
+    uint8_t value;
+} WPU_t;
+
+/**
+ * @brief Analog mode control on GPIO
+ */
+typedef union {
+    struct {
+        uint8_t ANS0 : 1;
+        uint8_t ANS1 : 1;
+        uint8_t ANS2 : 1;
+        uint8_t ANS3 : 1;
+        uint8_t ANS4 : 1;
+        uint8_t ANS5 : 1;
+        uint8_t ANS6 : 1;
+        uint8_t ANS7 : 1;
+    };
+    uint8_t value;
+} ANSEL_t;
+
 
 
 /** Define actual memory-mapped registers*/
@@ -92,6 +124,16 @@ typedef union {
 #define LATC  (*(volatile PORTA_t*) 0xF84) ///< Output Latch Register for PORTC
 #define TRISC (*(volatile PORTA_t*) 0xF89) ///< Data Direction Register for PORTC
 #define PORTC (*(volatile PORTA_t*) 0xF8E) ///< Input Register for PORTC
+
+#define INTCON   (*(volatile INTCON_t*) 0xFF2) ///< INTCON Register
+
+#define WPUA (*(volatile WPU_t*) 0xF0B) ///< Weak Pull up Register for PORTA
+#define WPUB (*(volatile WPU_t*) 0xF13) ///< Weak Pull up Register for PORTB
+#define WPUC (*(volatile WPU_t*) 0xF1B) ///< Weak Pull up Register for PORTC
+
+#define ANSELA (*(volatile ANSEL_t*) 0xF0C) ///< Analog mode secetion Register for PORTA
+#define ANSELB (*(volatile ANSEL_t*) 0xF14) ///< Analog mode secetion Register for PORTB
+#define ANSELC (*(volatile ANSEL_t*) 0xF1C) ///< Analog mode secetion Register for PORTC
 
 #endif	/* PIC18F45Q10_REGS_H */
 

@@ -117,6 +117,27 @@ uint8_t GPIO_ReadPort(unsigned char port);
  */
 uint8_t GPIO_ReadPortDebounced(unsigned char port);
 
+/**
+ * @brief Enables internal pull-ups on a specific pin.
+ * @param port          The target port (GPIO_PORTA, GPIO_PORTB, GPIO_PORTC).
+ * @param pin           The pin number (0-7).
+ */
+void GPIO_EnablePullUp(unsigned char port, unsigned char pin);
+
+/**
+ * @brief Disables internal pull-ups on a specific pin.
+ * @param port          The target port (GPIO_PORTA, GPIO_PORTB, GPIO_PORTC).
+ * @param pin           The pin number (0-7).
+ */
+void GPIO_DisablePullUp(unsigned char port, unsigned char pin);
+
+/**
+ * @brief Configures a GPIO pin as digital (disables analog function).
+ * @param port          The target port (GPIO_PORTA, GPIO_PORTB, GPIO_PORTC).
+ * @param pin           The pin number (0-7).
+ */
+void GPIO_SetDigitalMode(unsigned char port, unsigned char pin);
+
 
 #endif	/* GPIO_H */
 

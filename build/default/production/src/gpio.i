@@ -180,6 +180,40 @@ typedef union {
     };
     uint8_t value;
 } INTCON_t;
+
+
+
+
+typedef union {
+    struct {
+        uint8_t WPU0 : 1;
+        uint8_t WPU1 : 1;
+        uint8_t WPU2 : 1;
+        uint8_t WPU3 : 1;
+        uint8_t WPU4 : 1;
+        uint8_t WPU5 : 1;
+        uint8_t WPU6 : 1;
+        uint8_t WPU7 : 1;
+    };
+    uint8_t value;
+} WPU_t;
+
+
+
+
+typedef union {
+    struct {
+        uint8_t ANS0 : 1;
+        uint8_t ANS1 : 1;
+        uint8_t ANS2 : 1;
+        uint8_t ANS3 : 1;
+        uint8_t ANS4 : 1;
+        uint8_t ANS5 : 1;
+        uint8_t ANS6 : 1;
+        uint8_t ANS7 : 1;
+    };
+    uint8_t value;
+} ANSEL_t;
 # 16 "includes/gpio.h" 2
 # 1 "includes/config.h" 1
 # 17 "includes/gpio.h" 2
@@ -233,6 +267,27 @@ void GPIO_WritePort(unsigned char port, uint8_t value);
 uint8_t GPIO_ReadPort(unsigned char port);
 # 118 "includes/gpio.h"
 uint8_t GPIO_ReadPortDebounced(unsigned char port);
+
+
+
+
+
+
+void GPIO_EnablePullUp(unsigned char port, unsigned char pin);
+
+
+
+
+
+
+void GPIO_DisablePullUp(unsigned char port, unsigned char pin);
+
+
+
+
+
+
+void GPIO_SetDigitalMode(unsigned char port, unsigned char pin);
 # 12 "src/gpio.c" 2
 
 void GPIO_Init(void) {
@@ -359,4 +414,46 @@ uint8_t GPIO_ReadPortDebounced(unsigned char port) {
     }
 
     return stable_value;
+}
+
+void GPIO_EnablePullUp(unsigned char port, unsigned char pin) {
+    switch (port) {
+        case 0:
+            (*(volatile WPU_t*) 0xF0B).value |= (1 << pin);
+            break;
+        case 1:
+            (*(volatile WPU_t*) 0xF13).value |= (1 << pin);
+            break;
+        case 2:
+            (*(volatile WPU_t*) 0xF1B).value |= (1 << pin);
+            break;
+    }
+}
+
+void GPIO_DisablePullUp(unsigned char port, unsigned char pin) {
+    switch (port) {
+        case 0:
+            (*(volatile WPU_t*) 0xF0B).value &= ~(1 << pin);
+            break;
+        case 1:
+            (*(volatile WPU_t*) 0xF13).value &= ~(1 << pin);
+            break;
+        case 2:
+            (*(volatile WPU_t*) 0xF1B).value &= ~(1 << pin);
+            break;
+    }
+}
+
+void GPIO_SetDigitalMode(unsigned char port, unsigned char pin) {
+    switch (port) {
+        case 0:
+            (*(volatile ANSEL_t*) 0xF0C).value &= ~(1 << pin);
+            break;
+        case 1:
+            (*(volatile ANSEL_t*) 0xF14).value &= ~(1 << pin);
+            break;
+        case 2:
+            (*(volatile ANSEL_t*) 0xF1C).value &= ~(1 << pin);
+            break;
+    }
 }
